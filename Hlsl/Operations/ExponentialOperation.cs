@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class ExponentialOperation : ConsumerOperation
     {
-        public ExponentialOperation(HlslTreeNode value)
+        public ExponentialOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

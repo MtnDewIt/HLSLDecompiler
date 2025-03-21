@@ -1,7 +1,7 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public abstract class ConsumerOperation : Operation
     {
-        public HlslTreeNode Value => Inputs[0];
+        public HLSLTreeNode Value => Inputs[0];
     }
 }

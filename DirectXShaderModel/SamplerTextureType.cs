@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     // D3DSAMPLER_TEXTURE_TYPE
     public enum SamplerTextureType

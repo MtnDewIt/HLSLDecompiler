@@ -1,10 +1,10 @@
-﻿namespace HlslDecompiler.Hlsl.FlowControl
+﻿namespace HLSLDecompiler.HLSL.FlowControl
 {
     public class ClipStatement : IStatement
     {
-        public HlslTreeNode Value { get; }
+        public HLSLTreeNode Value { get; }
 
-        public ClipStatement(HlslTreeNode value, Closure closure)
+        public ClipStatement(HLSLTreeNode value, Closure closure)
         {
             Value = value;
             Closure = closure;

@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class ReciprocalOperation : ConsumerOperation
     {
-        public ReciprocalOperation(HlslTreeNode value)
+        public ReciprocalOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

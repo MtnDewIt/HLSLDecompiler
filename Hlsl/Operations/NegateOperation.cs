@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class NegateOperation : ConsumerOperation
     {
-        public NegateOperation(HlslTreeNode value)
+        public NegateOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

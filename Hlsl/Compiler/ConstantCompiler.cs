@@ -1,7 +1,7 @@
-﻿using HlslDecompiler.Util;
+﻿using HLSLDecompiler.Util;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     public sealed class ConstantCompiler
     {

@@ -1,9 +1,9 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Operations;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.Operations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     public class NodeGrouper
     {
@@ -19,27 +19,27 @@ namespace HlslDecompiler.Hlsl
         public MatrixMultiplicationGrouper MatrixMultiplicationGrouper { get; }
         public NormalizeGrouper NormalizeGrouper { get; }
 
-        public IList<IList<HlslTreeNode>> GroupComponents(List<HlslTreeNode> nodes)
+        public IList<IList<HLSLTreeNode>> GroupComponents(List<HLSLTreeNode> nodes)
         {
             switch (nodes.Count)
             {
                 case 0:
                 case 1:
-                    return new IList<HlslTreeNode>[] { nodes };
+                    return new IList<HLSLTreeNode>[] { nodes };
             }
 
-            List<IList<HlslTreeNode>> groups;
+            List<IList<HLSLTreeNode>> groups;
 
             var multiplicationGroup = MatrixMultiplicationGrouper.TryGetMultiplicationGroup(nodes);
             if (multiplicationGroup != null)
             {
                 int dimension = multiplicationGroup.MatrixRowCount;
-                groups = new List<IList<HlslTreeNode>>(new[]
+                groups = new List<IList<HLSLTreeNode>>(new[]
                     { nodes.Take(dimension).ToList()
                 });
                 if (dimension < nodes.Count)
                 {
-                    List<HlslTreeNode> rest = nodes.Skip(dimension).ToList();
+                    List<HLSLTreeNode> rest = nodes.Skip(dimension).ToList();
                     groups.AddRange(GroupComponents(rest));
                 }
                 return groups;
@@ -49,25 +49,25 @@ namespace HlslDecompiler.Hlsl
             if (normalizeGroup != null)
             {
                 int dimension = normalizeGroup.Length;
-                groups = new List<IList<HlslTreeNode>>(new[]
+                groups = new List<IList<HLSLTreeNode>>(new[]
                     { nodes.Take(dimension).ToList()
                 });
                 if (dimension < nodes.Count)
                 {
-                    List<HlslTreeNode> rest = nodes.Skip(dimension).ToList();
+                    List<HLSLTreeNode> rest = nodes.Skip(dimension).ToList();
                     groups.AddRange(GroupComponents(rest));
                 }
                 return groups;
             }
 
-            groups = new List<IList<HlslTreeNode>>();
+            groups = new List<IList<HLSLTreeNode>>();
 
             int groupStart = 0;
             int nodeIndex;
             for (nodeIndex = 1; nodeIndex < nodes.Count; nodeIndex++)
             {
-                HlslTreeNode node1 = nodes[groupStart];
-                HlslTreeNode node2 = nodes[nodeIndex];
+                HLSLTreeNode node1 = nodes[groupStart];
+                HLSLTreeNode node2 = nodes[nodeIndex];
                 if (CanGroupComponents(node1, node2) == false)
                 {
                     groups.Add(nodes.GetRange(groupStart, nodeIndex - groupStart));
@@ -84,7 +84,7 @@ namespace HlslDecompiler.Hlsl
         // =>
         // n.xy = a.xy + b.xy
         // n = a + b
-        public bool CanGroupComponents(HlslTreeNode node1, HlslTreeNode node2, bool allowMatrixColumn = false)
+        public bool CanGroupComponents(HLSLTreeNode node1, HLSLTreeNode node2, bool allowMatrixColumn = false)
         {
             if (node1.GetType() != node2.GetType())
             {
@@ -209,7 +209,7 @@ namespace HlslDecompiler.Hlsl
                 || constantRegister.ParameterClass == ParameterClass.MatrixRows;
         }
 
-        public static bool AreNodesEquivalent(HlslTreeNode node1, HlslTreeNode node2)
+        public static bool AreNodesEquivalent(HLSLTreeNode node1, HLSLTreeNode node2)
         {
             if (node1.GetType() != node2.GetType())
             {
@@ -265,7 +265,7 @@ namespace HlslDecompiler.Hlsl
             return false;
         }
 
-        public static bool AreNodesEquivalent(ICollection<HlslTreeNode> nodes1, ICollection<HlslTreeNode> nodes2)
+        public static bool AreNodesEquivalent(ICollection<HLSLTreeNode> nodes1, ICollection<HLSLTreeNode> nodes2)
         {
             if (nodes1.Count != nodes2.Count)
             {

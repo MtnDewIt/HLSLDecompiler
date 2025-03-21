@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace HlslDecompiler.DirectXShaderModel
+namespace HLSLDecompiler.DirectXShaderModel
 {
     public class ShaderModel
     {

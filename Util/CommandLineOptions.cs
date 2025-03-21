@@ -1,20 +1,67 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace HlslDecompiler.Util
+namespace HLSLDecompiler.Util
 {
     public class CommandLineOptions
     {
         public string InputFilename { get; }
         public bool DoAstAnalysis { get; }
 
-        public static CommandLineOptions Parse(string[] args)
+        public static CommandLineOptions Parse(string args)
         {
             return new CommandLineOptions(args);
         }
 
-        private CommandLineOptions(string[] args)
+        private CommandLineOptions(string args)
         {
-            foreach (string arg in args)
+            var results = new List<string>();
+            var currentArg = new StringBuilder();
+            var partStart = -1;
+            var quoted = false;
+
+            for (var i = 0; i < args.Length; i++)
+            {
+                switch (args[i])
+                {
+                    case ' ' when !quoted:
+                    case '>' when !quoted:
+                    case '\t' when !quoted:
+                        if (partStart != -1)
+                            currentArg.Append(args.AsSpan(partStart, i - partStart));
+                        if (currentArg.Length > 0)
+                        {
+                            var arg = currentArg.ToString();
+                            results.Add(arg);
+                        }
+                        currentArg.Clear();
+                        partStart = -1;
+                        break;
+                    case '"':
+                        quoted = !quoted;
+                        if (partStart != -1)
+                            currentArg.Append(args.AsSpan(partStart, i - partStart));
+                        partStart = -1;
+                        break;
+                    default:
+                        if (partStart == -1)
+                            partStart = i;
+                        break;
+                }
+            }
+
+            if (partStart != -1)
+                currentArg.Append(args.AsSpan(partStart));
+
+            if (currentArg.Length > 0)
+            {
+                var arg = currentArg.ToString();
+                results.Add(arg);
+            }
+
+            foreach (string arg in results)
             {
                 if (arg.StartsWith("--"))
                 {

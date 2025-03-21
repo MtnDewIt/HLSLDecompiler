@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class PartialDerivativeXOperation : ConsumerOperation
     {
-        public PartialDerivativeXOperation(HlslTreeNode value)
+        public PartialDerivativeXOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

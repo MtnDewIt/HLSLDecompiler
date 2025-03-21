@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl.FlowControl
+﻿namespace HLSLDecompiler.HLSL.FlowControl
 {
     public class IfStatement : IStatement
     {
-        public IfStatement(HlslTreeNode comparison, Closure closure)
+        public IfStatement(HLSLTreeNode comparison, Closure closure)
         {
             Comparison = comparison;
             Closure = closure;
@@ -11,7 +11,7 @@
         }
 
         public Closure Closure { get; }
-        public HlslTreeNode Comparison { get; }
+        public HLSLTreeNode Comparison { get; }
         
         public StatementSequence TrueBody { get; }
         public StatementSequence FalseBody { get; set; }

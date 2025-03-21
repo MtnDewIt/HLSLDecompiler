@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     // https://docs.microsoft.com/en-us/windows-hardware/drivers/display/source-parameter-token?redirectedfrom=MSDN
     public enum SourceModifier

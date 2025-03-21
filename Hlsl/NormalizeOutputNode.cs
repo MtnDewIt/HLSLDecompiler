@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class NormalizeOutputNode : HlslTreeNode, IHasComponentIndex
+    public class NormalizeOutputNode : HLSLTreeNode, IHasComponentIndex
     {
-        public NormalizeOutputNode(IEnumerable<HlslTreeNode> inputs, int componentIndex)
+        public NormalizeOutputNode(IEnumerable<HLSLTreeNode> inputs, int componentIndex)
         {
-            foreach (HlslTreeNode input in inputs)
+            foreach (HLSLTreeNode input in inputs)
             {
                 AddInput(input);
             }

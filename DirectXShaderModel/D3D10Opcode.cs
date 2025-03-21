@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     // D3D10_SB_OPCODE_TYPE
     public enum D3D10Opcode

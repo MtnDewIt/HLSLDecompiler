@@ -1,15 +1,15 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class SubtractOperation : Operation
     {
-        public SubtractOperation(HlslTreeNode minuend, HlslTreeNode subtrahend)
+        public SubtractOperation(HLSLTreeNode minuend, HLSLTreeNode subtrahend)
         {
             AddInput(minuend);
             AddInput(subtrahend);
         }
 
-        public HlslTreeNode Minuend => Inputs[0];
-        public HlslTreeNode Subtrahend => Inputs[1];
+        public HLSLTreeNode Minuend => Inputs[0];
+        public HLSLTreeNode Subtrahend => Inputs[1];
 
         public override string Mnemonic => "sub";
     }

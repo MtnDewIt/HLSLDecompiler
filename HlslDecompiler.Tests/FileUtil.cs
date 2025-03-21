@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace HlslDecompiler.Tests
+namespace HLSLDecompiler.Tests
 {
     public static class FileUtil
     {

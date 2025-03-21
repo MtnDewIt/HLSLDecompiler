@@ -1,10 +1,10 @@
-﻿using HlslDecompiler.Hlsl;
-using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.HLSL;
+using HLSLDecompiler.DirectXShaderModel;
 using NUnit.Framework;
 using System.IO;
 using NUnit.Framework.Legacy;
 
-namespace HlslDecompiler.Tests
+namespace HLSLDecompiler.Tests
 {
     [TestFixture]
     public class DecompileDxbcTests
@@ -62,7 +62,7 @@ namespace HlslDecompiler.Tests
             FileUtil.MakeFolder(asmOutputFilename);
             asmWriter.Write(asmOutputFilename);
 
-            var hlslWriter = new HlslAstWriter(shader);
+            var hlslWriter = new HLSLAstWriter(shader);
             FileUtil.MakeFolder(hlslOutputFilename);
             hlslWriter.Write(hlslOutputFilename);
 

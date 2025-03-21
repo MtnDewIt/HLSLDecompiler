@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     public class NormalizeGrouper
     {
-        public HlslTreeNode[] TryGetContext(IList<HlslTreeNode> components)
+        public HLSLTreeNode[] TryGetContext(IList<HLSLTreeNode> components)
         {
             var firstComponent = components[0];
             if (!(firstComponent is DivisionOperation firstDivision) ||
@@ -44,7 +44,7 @@ namespace HlslDecompiler.Hlsl
                 .ToArray();
         }
 
-        private static bool IsNormalizeGroupComponent(HlslTreeNode nextComponent, DivisionOperation firstDivision, LengthOperation firstLength)
+        private static bool IsNormalizeGroupComponent(HLSLTreeNode nextComponent, DivisionOperation firstDivision, LengthOperation firstLength)
         {
             return nextComponent is DivisionOperation nextDivision
                 && NodeGrouper.AreNodesEquivalent(nextDivision.Divisor, firstDivision.Divisor)

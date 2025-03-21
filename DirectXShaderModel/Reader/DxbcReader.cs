@@ -1,10 +1,10 @@
-﻿using HlslDecompiler.Util;
+﻿using HLSLDecompiler.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace HlslDecompiler.DirectXShaderModel
+namespace HLSLDecompiler.DirectXShaderModel
 {
     public class DxbcReader : BinaryReader
     {

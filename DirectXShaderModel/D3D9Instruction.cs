@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HlslDecompiler.DirectXShaderModel
+namespace HLSLDecompiler.DirectXShaderModel
 {
     // Instruction
     // 80000000 set to 0

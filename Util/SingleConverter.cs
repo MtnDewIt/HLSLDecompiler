@@ -3,7 +3,7 @@ using System.Globalization;
 
 // Based on https://stackoverflow.com/a/1584328/1778371
 
-namespace HlslDecompiler.Util
+namespace HLSLDecompiler.Util
 {
     /// <summary>
     /// A class to allow the conversion of floats to string representations of

@@ -1,8 +1,8 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class RegisterInputNode : HlslTreeNode, IHasComponentIndex
+    public class RegisterInputNode : HLSLTreeNode, IHasComponentIndex
     {
         public RegisterInputNode(RegisterComponentKey registerComponentKey)
         {

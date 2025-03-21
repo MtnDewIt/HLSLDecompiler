@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     public abstract class Instruction
     {

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class HlslTreeNode
+    public class HLSLTreeNode
     {
-        public IList<HlslTreeNode> Inputs { get; } = new List<HlslTreeNode>();
-        public IList<HlslTreeNode> Outputs { get; } = new List<HlslTreeNode>();
+        public IList<HLSLTreeNode> Inputs { get; } = new List<HLSLTreeNode>();
+        public IList<HLSLTreeNode> Outputs { get; } = new List<HLSLTreeNode>();
 
-        public virtual HlslTreeNode Reduce()
+        public virtual HLSLTreeNode Reduce()
         {
             for (int i = 0; i < Inputs.Count; i++)
             {
@@ -17,7 +17,7 @@ namespace HlslDecompiler.Hlsl
             return this;
         }
 
-        public void Replace(HlslTreeNode with)
+        public void Replace(HLSLTreeNode with)
         {
             foreach (var input in Inputs)
             {
@@ -36,7 +36,7 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        protected void AddInput(HlslTreeNode node)
+        protected void AddInput(HLSLTreeNode node)
         {
             Inputs.Add(node);
             node.Outputs.Add(this);
@@ -45,7 +45,7 @@ namespace HlslDecompiler.Hlsl
 
         private void AssertLoopFree()
         {
-            foreach (HlslTreeNode output in Outputs)
+            foreach (HLSLTreeNode output in Outputs)
             {
                 AssertLoopFree(output);
                 if (this == output)
@@ -55,9 +55,9 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private void AssertLoopFree(HlslTreeNode parent)
+        private void AssertLoopFree(HLSLTreeNode parent)
         {
-            foreach (HlslTreeNode upperParent in parent.Outputs)
+            foreach (HLSLTreeNode upperParent in parent.Outputs)
             {
                 if (this == upperParent)
                 {

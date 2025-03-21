@@ -1,9 +1,9 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     public sealed class RegisterState
     {
@@ -14,7 +14,7 @@ namespace HlslDecompiler.Hlsl
         public ICollection<ConstantRegister> ConstantDefinitions = new List<ConstantRegister>();
         public ICollection<ConstantIntRegister> ConstantIntDefinitions = new List<ConstantIntRegister>();
         public ICollection<ConstantDeclaration> ConstantDeclarations { get; } = new List<ConstantDeclaration>();
-        public IDictionary<RegisterKey, HlslTreeNode> Samplers { get; } = new Dictionary<RegisterKey, HlslTreeNode>();
+        public IDictionary<RegisterKey, HLSLTreeNode> Samplers { get; } = new Dictionary<RegisterKey, HLSLTreeNode>();
 
         public IDictionary<RegisterKey, RegisterDeclaration> MethodInputRegisters { get; } = new Dictionary<RegisterKey, RegisterDeclaration>();
         public IDictionary<RegisterKey, RegisterDeclaration> MethodOutputRegisters { get; } = new Dictionary<RegisterKey, RegisterDeclaration>();

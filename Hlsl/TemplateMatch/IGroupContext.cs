@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.Hlsl.TemplateMatch
+﻿namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public interface IGroupContext
     {

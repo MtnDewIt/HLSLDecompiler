@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class DotProductContext : IGroupContext
     {
@@ -31,8 +31,8 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             }
 
             int dimension = components.Length;
-            var newValue1 = new HlslTreeNode[dimension];
-            var newValue2 = new HlslTreeNode[dimension];
+            var newValue1 = new HLSLTreeNode[dimension];
+            var newValue2 = new HLSLTreeNode[dimension];
             for (int i = 0; i < dimension; i++)
             {
                 int min = int.MaxValue;

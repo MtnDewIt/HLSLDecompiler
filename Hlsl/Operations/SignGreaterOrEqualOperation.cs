@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class SignGreaterOrEqualOperation : Operation
     {
-        public SignGreaterOrEqualOperation(HlslTreeNode value1, HlslTreeNode value2)
+        public SignGreaterOrEqualOperation(HLSLTreeNode value1, HLSLTreeNode value2)
         {
             AddInput(value1);
             AddInput(value2);

@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public static class AssociativityTester
     {
-        public static bool TestForMultiplication(HlslTreeNode node)
+        public static bool TestForMultiplication(HLSLTreeNode node)
         {
             switch (node)
             {

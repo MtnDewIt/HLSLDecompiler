@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler
+﻿namespace HLSLDecompiler
 {
     public interface IHasComponentIndex
     {

@@ -1,17 +1,17 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class CompareOperation : Operation
     {
-        public CompareOperation(HlslTreeNode value, HlslTreeNode lessValue, HlslTreeNode greaterEqualValue)
+        public CompareOperation(HLSLTreeNode value, HLSLTreeNode lessValue, HLSLTreeNode greaterEqualValue)
         {
             AddInput(value);
             AddInput(lessValue);
             AddInput(greaterEqualValue);
         }
 
-        public HlslTreeNode Value => Inputs[0];
-        public HlslTreeNode LessValue => Inputs[1];
-        public HlslTreeNode GreaterEqualValue => Inputs[2];
+        public HLSLTreeNode Value => Inputs[0];
+        public HLSLTreeNode LessValue => Inputs[1];
+        public HLSLTreeNode GreaterEqualValue => Inputs[2];
 
         public override string Mnemonic => "cmp";
     }

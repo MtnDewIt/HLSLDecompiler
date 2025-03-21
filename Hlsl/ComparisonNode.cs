@@ -1,19 +1,19 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 using System;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class ComparisonNode : HlslTreeNode
+    public class ComparisonNode : HLSLTreeNode
     {
-        public ComparisonNode(HlslTreeNode left, HlslTreeNode right, IfComparison comparison)
+        public ComparisonNode(HLSLTreeNode left, HLSLTreeNode right, IfComparison comparison)
         {
             AddInput(left);
             AddInput(right);
             Comparison = comparison;
         }
 
-        public HlslTreeNode Left => Inputs[0];
-        public HlslTreeNode Right => Inputs[1];
+        public HLSLTreeNode Left => Inputs[0];
+        public HLSLTreeNode Right => Inputs[1];
         public IfComparison Comparison { get; }
 
         public override string ToString()

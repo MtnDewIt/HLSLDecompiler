@@ -1,18 +1,18 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Hlsl;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.HLSL;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace HlslDecompiler
+namespace HLSLDecompiler
 {
-    public class HlslSimpleWriter : HlslWriter
+    public class HLSLSimpleWriter : HLSLWriter
     {
         private int _loopVariableIndex = -1;
         private readonly CultureInfo _culture = CultureInfo.InvariantCulture;
 
-        public HlslSimpleWriter(ShaderModel shader)
+        public HLSLSimpleWriter(ShaderModel shader)
             : base(shader)
         {
         }

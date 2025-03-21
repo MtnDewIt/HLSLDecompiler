@@ -1,13 +1,13 @@
-﻿namespace HlslDecompiler.Hlsl.TemplateMatch
+﻿namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class SubtractNegateTemplate : NodeTemplate<SubtractOperation>
     {
-        public override bool Match(HlslTreeNode node)
+        public override bool Match(HLSLTreeNode node)
         {
             return node is SubtractOperation subtract && subtract.Subtrahend is NegateOperation;
         }
 
-        public override HlslTreeNode Reduce(SubtractOperation node)
+        public override HLSLTreeNode Reduce(SubtractOperation node)
         {
             return new AddOperation(node.Minuend, (node.Subtrahend as NegateOperation).Value);
         }

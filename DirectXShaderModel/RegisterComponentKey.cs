@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HlslDecompiler.DirectXShaderModel
+namespace HLSLDecompiler.DirectXShaderModel
 {
     public class RegisterComponentKey : IHasComponentIndex
     {

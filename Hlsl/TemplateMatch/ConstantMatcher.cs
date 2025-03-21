@@ -1,38 +1,38 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 using System;
 using System.Linq;
 using System.Reflection.Metadata;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public static class ConstantMatcher
     {
-        public static bool IsConstant(HlslTreeNode node)
+        public static bool IsConstant(HLSLTreeNode node)
         {
             return node is ConstantNode;
         }
 
-        public static bool IsZero(HlslTreeNode node)
+        public static bool IsZero(HLSLTreeNode node)
         {
             return node is ConstantNode constant && constant.Value == 0;
         }
 
-        public static bool IsOne(HlslTreeNode node)
+        public static bool IsOne(HLSLTreeNode node)
         {
             return node is ConstantNode constant && constant.Value == 1;
         }
 
-        public static bool IsNegativeOne(HlslTreeNode node)
+        public static bool IsNegativeOne(HLSLTreeNode node)
         {
             return node is ConstantNode constant && constant.Value == -1;
         }
 
-        public static bool IsNegative(HlslTreeNode node)
+        public static bool IsNegative(HLSLTreeNode node)
         {
             return node is ConstantNode constant && constant.Value < 0;
         }
 
-        public static bool? TryEvaluateComparison(HlslTreeNode node)
+        public static bool? TryEvaluateComparison(HLSLTreeNode node)
         {
             if (node is GroupNode group)
             {
@@ -69,7 +69,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             return null;
         }
 
-        public static int? TryEvaluateValue(HlslTreeNode node)
+        public static int? TryEvaluateValue(HLSLTreeNode node)
         {
             if (IsOne(node))
             {

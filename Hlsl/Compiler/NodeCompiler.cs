@@ -1,10 +1,10 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Operations;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     public sealed class NodeCompiler
     {
@@ -24,17 +24,17 @@ namespace HlslDecompiler.Hlsl
             _matrixMultiplicationCompiler = new MatrixMultiplicationCompiler(this);
         }
 
-        public string Compile(HlslTreeNode node)
+        public string Compile(HLSLTreeNode node)
         {
-            return Compile(new List<HlslTreeNode>() { node });
+            return Compile(new List<HLSLTreeNode>() { node });
         }
 
-        public string Compile(IEnumerable<HlslTreeNode> group, int promoteToVectorSize = PromoteToAnyVectorSize)
+        public string Compile(IEnumerable<HLSLTreeNode> group, int promoteToVectorSize = PromoteToAnyVectorSize)
         {
             return Compile(group.ToList(), promoteToVectorSize);
         }
 
-        public string Compile(List<HlslTreeNode> components, int promoteToVectorSize = PromoteToAnyVectorSize)
+        public string Compile(List<HLSLTreeNode> components, int promoteToVectorSize = PromoteToAnyVectorSize)
         {
             if (components.Count == 0)
             {
@@ -43,7 +43,7 @@ namespace HlslDecompiler.Hlsl
 
             if (components.Count > 1)
             {
-                IList<IList<HlslTreeNode>> componentGroups = _nodeGrouper.GroupComponents(components);
+                IList<IList<HLSLTreeNode>> componentGroups = _nodeGrouper.GroupComponents(components);
                 if (componentGroups.Count > 1)
                 {
                     return CompileVectorConstructor(components, componentGroups);
@@ -93,7 +93,7 @@ namespace HlslDecompiler.Hlsl
             throw new NotImplementedException();
         }
 
-        private string CompileVectorConstructor(List<HlslTreeNode> components, IList<IList<HlslTreeNode>> componentGroups)
+        private string CompileVectorConstructor(List<HLSLTreeNode> components, IList<IList<HLSLTreeNode>> componentGroups)
         {
             UngroupConstantGroups(componentGroups);
 
@@ -101,7 +101,7 @@ namespace HlslDecompiler.Hlsl
             return $"float{components.Count}({string.Join(", ", compiledConstructorParts)})";
         }
 
-        private static void UngroupConstantGroups(IList<IList<HlslTreeNode>> componentGroups)
+        private static void UngroupConstantGroups(IList<IList<HLSLTreeNode>> componentGroups)
         {
             int i = 0;
             while (i < componentGroups.Count)
@@ -123,20 +123,20 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private string CompileConstant(List<HlslTreeNode> components, int promoteToVectorSize)
+        private string CompileConstant(List<HLSLTreeNode> components, int promoteToVectorSize)
         {
             var constantComponents = components.Cast<ConstantNode>().ToArray();
             return _constantCompiler.Compile(constantComponents);
         }
 
-        private string CompileOperation(Operation operation, List<HlslTreeNode> components, int promoteToVectorSize)
+        private string CompileOperation(Operation operation, List<HLSLTreeNode> components, int promoteToVectorSize)
         {
             switch (operation)
             {
                 case NegateOperation _:
                     {
                         string name = operation.Mnemonic;
-                        IEnumerable<HlslTreeNode> input = components.Select(g => g.Inputs[0]);
+                        IEnumerable<HLSLTreeNode> input = components.Select(g => g.Inputs[0]);
                         bool isAssociative = AssociativityTester.TestForMultiplication(input.First());
                         string value = Compile(input);
                         return isAssociative
@@ -253,7 +253,7 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private string CompileNodesWithComponents(List<HlslTreeNode> components, HlslTreeNode first, int promoteToVectorSize)
+        private string CompileNodesWithComponents(List<HLSLTreeNode> components, HLSLTreeNode first, int promoteToVectorSize)
         {
             var componentsWithIndices = components.Cast<IHasComponentIndex>();
 
@@ -342,7 +342,7 @@ namespace HlslDecompiler.Hlsl
             throw new NotImplementedException();
         }
 
-        private string CompileComparison(List<HlslTreeNode> components, ComparisonNode first)
+        private string CompileComparison(List<HLSLTreeNode> components, ComparisonNode first)
         {
             var left = Compile(components.Cast<ComparisonNode>().Select(c => c.Left));
             var right = Compile(components.Cast<ComparisonNode>().Select(c => c.Right));

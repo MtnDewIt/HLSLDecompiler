@@ -1,8 +1,8 @@
-﻿using HlslDecompiler.Util;
+﻿using HLSLDecompiler.Util;
 using System.IO;
 using System.Text;
 
-namespace HlslDecompiler
+namespace HLSLDecompiler
 {
     enum ShaderFileFormat
     {

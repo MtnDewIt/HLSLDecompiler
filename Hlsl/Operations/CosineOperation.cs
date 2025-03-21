@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class CosineOperation : ConsumerOperation
     {
-        public CosineOperation(HlslTreeNode value)
+        public CosineOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

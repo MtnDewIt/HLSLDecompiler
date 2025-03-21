@@ -1,12 +1,12 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Hlsl;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.HLSL;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace HlslDecompiler
+namespace HLSLDecompiler
 {
-    public abstract class HlslWriter
+    public abstract class HLSLWriter
     {
         protected readonly ShaderModel _shader;
 
@@ -14,10 +14,10 @@ namespace HlslDecompiler
         StreamWriter hlslWriter;
         protected string indent = "";
 
-        protected HlslAst _ast;
+        protected HLSLAst _ast;
         protected RegisterState _registers;
 
-        public HlslWriter(ShaderModel shader)
+        public HLSLWriter(ShaderModel shader)
         {
             _shader = shader;
         }

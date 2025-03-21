@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class AbsoluteOperation : ConsumerOperation
     {
-        public AbsoluteOperation(HlslTreeNode value)
+        public AbsoluteOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

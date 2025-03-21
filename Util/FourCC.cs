@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace HlslDecompiler.Util
+namespace HLSLDecompiler.Util
 {
     class FourCC
     {

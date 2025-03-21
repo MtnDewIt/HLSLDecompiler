@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class FractionalOperation : ConsumerOperation
     {
-        public FractionalOperation(HlslTreeNode value)
+        public FractionalOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

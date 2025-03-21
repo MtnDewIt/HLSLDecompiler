@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class LengthOperation : Operation
     {

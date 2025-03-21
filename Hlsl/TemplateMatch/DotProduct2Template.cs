@@ -1,6 +1,6 @@
-﻿using HlslDecompiler.Operations;
+﻿using HLSLDecompiler.Operations;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     // 2 by 2 dot product has a pattern of:
     // a*x + b*y
@@ -14,12 +14,12 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             _templateMatcher = templateMatcher;
         }
 
-        public IGroupContext Match(HlslTreeNode node)
+        public IGroupContext Match(HLSLTreeNode node)
         {
             return MatchDotProduct2(node);
         }
 
-        private DotProductContext MatchDotProduct2(HlslTreeNode node)
+        private DotProductContext MatchDotProduct2(HLSLTreeNode node)
         {
             if (!(node is AddOperation add) ||
                 !(add.Addend1 is MultiplyOperation ax) ||
@@ -28,10 +28,10 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
                 return null;
             }
 
-            HlslTreeNode a = ax.Factor1;
-            HlslTreeNode b = by.Factor1;
-            HlslTreeNode x = ax.Factor2;
-            HlslTreeNode y = by.Factor2;
+            HLSLTreeNode a = ax.Factor1;
+            HLSLTreeNode b = by.Factor1;
+            HLSLTreeNode x = ax.Factor2;
+            HLSLTreeNode y = by.Factor2;
 
             if (a is ConstantNode || b is ConstantNode || x is ConstantNode || y is ConstantNode)
             {
@@ -64,15 +64,15 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             return new DotProductContext(new GroupNode(a, b), new GroupNode(x, y));
         }
 
-        public HlslTreeNode Reduce(HlslTreeNode node, IGroupContext groupContext)
+        public HLSLTreeNode Reduce(HLSLTreeNode node, IGroupContext groupContext)
         {
             var dotProductContext = groupContext as DotProductContext;
             return new DotProductOperation(dotProductContext.Value1, dotProductContext.Value2);
         }
 
-        private static void Swap(ref HlslTreeNode a, ref HlslTreeNode b)
+        private static void Swap(ref HLSLTreeNode a, ref HLSLTreeNode b)
         {
-            HlslTreeNode temp = a;
+            HLSLTreeNode temp = a;
             a = b;
             b = temp;
         }

@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class LogOperation : ConsumerOperation
     {
-        public LogOperation(HlslTreeNode value)
+        public LogOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

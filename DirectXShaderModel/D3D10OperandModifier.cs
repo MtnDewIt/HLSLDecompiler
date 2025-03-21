@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HlslDecompiler.DirectXShaderModel
+namespace HLSLDecompiler.DirectXShaderModel
 {
     [Flags]
     public enum D3D10OperandModifier

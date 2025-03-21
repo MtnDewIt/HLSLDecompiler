@@ -1,6 +1,6 @@
-﻿using HlslDecompiler.Operations;
+﻿using HLSLDecompiler.Operations;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     // 3 by 3 dot product has a pattern of:
     // #1  dot(ab, xy) + c*z
@@ -15,12 +15,12 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             _templateMatcher = templateMatcher;
         }
 
-        public IGroupContext Match(HlslTreeNode node)
+        public IGroupContext Match(HLSLTreeNode node)
         {
             return MatchDotProduct3(node);
         }
 
-        private DotProductContext MatchDotProduct3(HlslTreeNode node)
+        private DotProductContext MatchDotProduct3(HLSLTreeNode node)
         {
             if (!(node is AddOperation addition))
             {
@@ -51,14 +51,14 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
                 }
             }
 
-            HlslTreeNode b = dot.X.Inputs[1];
-            HlslTreeNode c = cz.Factor1;
+            HLSLTreeNode b = dot.X.Inputs[1];
+            HLSLTreeNode c = cz.Factor1;
             if (_templateMatcher.CanGroupComponents(b, c, allowMatrixColumn))
             {
-                HlslTreeNode a = dot.X.Inputs[0];
-                HlslTreeNode x = dot.Y.Inputs[0];
-                HlslTreeNode y = dot.Y.Inputs[1];
-                HlslTreeNode z = cz.Factor2;
+                HLSLTreeNode a = dot.X.Inputs[0];
+                HLSLTreeNode x = dot.Y.Inputs[0];
+                HLSLTreeNode y = dot.Y.Inputs[1];
+                HLSLTreeNode z = cz.Factor2;
                 if (allowMatrixColumn && _templateMatcher.SharesMatrixColumnOrRow(a, b))
                 {
                     // If one of the arguments is a matrix, allow the other argument to be arbitrary.
@@ -73,7 +73,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             return null;
         }
 
-        public HlslTreeNode Reduce(HlslTreeNode node, IGroupContext groupContext)
+        public HLSLTreeNode Reduce(HLSLTreeNode node, IGroupContext groupContext)
         {
             var dotProductContext = groupContext as DotProductContext;
             return new DotProductOperation(dotProductContext.Value1, dotProductContext.Value2);

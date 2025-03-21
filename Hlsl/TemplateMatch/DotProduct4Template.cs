@@ -1,6 +1,6 @@
-﻿using HlslDecompiler.Operations;
+﻿using HLSLDecompiler.Operations;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     // 4 by 4 dot product has a pattern of:
     // #1  dot3(abc, xyz) + dw
@@ -15,12 +15,12 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             _templateMatcher = templateMatcher;
         }
 
-        public IGroupContext Match(HlslTreeNode node)
+        public IGroupContext Match(HLSLTreeNode node)
         {
             return MatchDotProduct4(node);
         }
 
-        private DotProductContext MatchDotProduct4(HlslTreeNode node)
+        private DotProductContext MatchDotProduct4(HLSLTreeNode node)
         {
             if (!(node is AddOperation addition))
             {
@@ -51,16 +51,16 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
                 }
             }
 
-            HlslTreeNode c = dot.X.Inputs[2];
-            HlslTreeNode d = dw.Factor1;
+            HLSLTreeNode c = dot.X.Inputs[2];
+            HLSLTreeNode d = dw.Factor1;
             if (_templateMatcher.CanGroupComponents(c, d, allowMatrixColumn))
             {
-                HlslTreeNode a = dot.X.Inputs[0];
-                HlslTreeNode b = dot.X.Inputs[1];
-                HlslTreeNode x = dot.Y.Inputs[0];
-                HlslTreeNode y = dot.Y.Inputs[1];
-                HlslTreeNode z = dot.Y.Inputs[2];
-                HlslTreeNode w = dw.Factor2;
+                HLSLTreeNode a = dot.X.Inputs[0];
+                HLSLTreeNode b = dot.X.Inputs[1];
+                HLSLTreeNode x = dot.Y.Inputs[0];
+                HLSLTreeNode y = dot.Y.Inputs[1];
+                HLSLTreeNode z = dot.Y.Inputs[2];
+                HLSLTreeNode w = dw.Factor2;
                 if (allowMatrixColumn && _templateMatcher.SharesMatrixColumnOrRow(c, d))
                 {
                     // If one of the arguments is a matrix, allow the other argument to be arbitrary.
@@ -75,7 +75,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             return null;
         }
 
-        public HlslTreeNode Reduce(HlslTreeNode node, IGroupContext groupContext)
+        public HLSLTreeNode Reduce(HLSLTreeNode node, IGroupContext groupContext)
         {
             var dotProductContext = groupContext as DotProductContext;
             return new DotProductOperation(dotProductContext.Value1, dotProductContext.Value2);

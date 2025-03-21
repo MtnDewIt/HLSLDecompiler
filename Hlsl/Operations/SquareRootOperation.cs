@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class SquareRootOperation : ConsumerOperation
     {
-        public SquareRootOperation(HlslTreeNode value)
+        public SquareRootOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

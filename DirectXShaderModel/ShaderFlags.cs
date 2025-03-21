@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HlslDecompiler.DirectXShaderModel
+namespace HLSLDecompiler.DirectXShaderModel
 {
     // D3DXSHADER
     [Flags]

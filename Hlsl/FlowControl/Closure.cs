@@ -1,13 +1,13 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 using System.Collections.Generic;
 
-namespace HlslDecompiler.Hlsl.FlowControl
+namespace HLSLDecompiler.HLSL.FlowControl
 {
     public class Closure
     {
-        public Dictionary<RegisterComponentKey, HlslTreeNode> Outputs { get; }
+        public Dictionary<RegisterComponentKey, HLSLTreeNode> Outputs { get; }
 
-        public Closure(Dictionary<RegisterComponentKey, HlslTreeNode> outputs)
+        public Closure(Dictionary<RegisterComponentKey, HLSLTreeNode> outputs)
         {
             Outputs = outputs;
         }

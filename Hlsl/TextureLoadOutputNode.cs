@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class TextureLoadOutputNode : HlslTreeNode, IHasComponentIndex
+    public class TextureLoadOutputNode : HLSLTreeNode, IHasComponentIndex
     {
         private int _numTextureCoordinates;
 
-        private TextureLoadOutputNode(RegisterInputNode sampler, HlslTreeNode[] textureCoords, int componentIndex)
+        private TextureLoadOutputNode(RegisterInputNode sampler, HLSLTreeNode[] textureCoords, int componentIndex)
         {
             AddInput(sampler);
-            foreach (HlslTreeNode textureCoord in textureCoords)
+            foreach (HLSLTreeNode textureCoord in textureCoords)
             {
                 AddInput(textureCoord);
             }
@@ -19,12 +19,12 @@ namespace HlslDecompiler.Hlsl
             ComponentIndex = componentIndex;
         }
 
-        public static TextureLoadOutputNode Create(RegisterInputNode sampler, HlslTreeNode[] textureCoords, int componentIndex)
+        public static TextureLoadOutputNode Create(RegisterInputNode sampler, HLSLTreeNode[] textureCoords, int componentIndex)
         {
             return new TextureLoadOutputNode(sampler, textureCoords, componentIndex);
         }
 
-        public static TextureLoadOutputNode CreateBias(RegisterInputNode sampler, HlslTreeNode[] textureCoords, int componentIndex)
+        public static TextureLoadOutputNode CreateBias(RegisterInputNode sampler, HLSLTreeNode[] textureCoords, int componentIndex)
         {
             return new TextureLoadOutputNode(sampler, textureCoords, componentIndex)
             {
@@ -32,7 +32,7 @@ namespace HlslDecompiler.Hlsl
             };
         }
 
-        public static TextureLoadOutputNode CreateLod(RegisterInputNode sampler, HlslTreeNode[] textureCoords, int componentIndex)
+        public static TextureLoadOutputNode CreateLod(RegisterInputNode sampler, HLSLTreeNode[] textureCoords, int componentIndex)
         {
             return new TextureLoadOutputNode(sampler, textureCoords, componentIndex)
             {
@@ -40,7 +40,7 @@ namespace HlslDecompiler.Hlsl
             };
         }
 
-        public static TextureLoadOutputNode CreateProj(RegisterInputNode sampler, HlslTreeNode[] textureCoords, int componentIndex)
+        public static TextureLoadOutputNode CreateProj(RegisterInputNode sampler, HLSLTreeNode[] textureCoords, int componentIndex)
         {
             return new TextureLoadOutputNode(sampler, textureCoords, componentIndex)
             {
@@ -48,18 +48,18 @@ namespace HlslDecompiler.Hlsl
             };
         }
 
-        public static TextureLoadOutputNode CreateGrad(RegisterInputNode sampler, HlslTreeNode[] textureCoords, int componentIndex,
-            HlslTreeNode[] derivativeX, HlslTreeNode[] derivativeY)
+        public static TextureLoadOutputNode CreateGrad(RegisterInputNode sampler, HLSLTreeNode[] textureCoords, int componentIndex,
+            HLSLTreeNode[] derivativeX, HLSLTreeNode[] derivativeY)
         {
             var node = new TextureLoadOutputNode(sampler, textureCoords, componentIndex)
             {
                 Controls = TextureLoadControls.Grad
             };
-            foreach (HlslTreeNode component in derivativeX)
+            foreach (HLSLTreeNode component in derivativeX)
             {
                 node.AddInput(component);
             }
-            foreach (HlslTreeNode component in derivativeY)
+            foreach (HLSLTreeNode component in derivativeY)
             {
                 node.AddInput(component);
             }
@@ -67,9 +67,9 @@ namespace HlslDecompiler.Hlsl
         }
 
         public RegisterInputNode Sampler => (RegisterInputNode)Inputs[0];
-        public IEnumerable<HlslTreeNode> TextureCoordinateInputs => Inputs.Skip(1).Take(_numTextureCoordinates);
-        public IEnumerable<HlslTreeNode> DerivativeX => Inputs.Skip(1 + _numTextureCoordinates).Take(_numTextureCoordinates);
-        public IEnumerable<HlslTreeNode> DerivativeY => Inputs.Skip(1 + 2 * _numTextureCoordinates).Take(_numTextureCoordinates);
+        public IEnumerable<HLSLTreeNode> TextureCoordinateInputs => Inputs.Skip(1).Take(_numTextureCoordinates);
+        public IEnumerable<HLSLTreeNode> DerivativeX => Inputs.Skip(1 + _numTextureCoordinates).Take(_numTextureCoordinates);
+        public IEnumerable<HLSLTreeNode> DerivativeY => Inputs.Skip(1 + 2 * _numTextureCoordinates).Take(_numTextureCoordinates);
         public int ComponentIndex { get; }
         public TextureLoadControls Controls { get; private set; }
     }

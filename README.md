@@ -1,8 +1,8 @@
-# HlslDecompiler
+# HLSLDecompiler
 Decompiles Shader Model 3.0 shaders into HLSL code
 
 ## Usage
-`HlslDecompiler [--ast] shader.fxc`
+`HLSLDecompiler [--ast] shader.fxc`
 
 The program will output the assembly listing in shader.asm, e.g.
 ```

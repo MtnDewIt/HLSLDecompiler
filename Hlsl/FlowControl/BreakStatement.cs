@@ -1,14 +1,14 @@
-﻿namespace HlslDecompiler.Hlsl.FlowControl
+﻿namespace HLSLDecompiler.HLSL.FlowControl
 {
     public class BreakStatement : IStatement
     {
-        public BreakStatement(HlslTreeNode comparison, Closure closure)
+        public BreakStatement(HLSLTreeNode comparison, Closure closure)
         {
             Comparison = comparison;
             Closure = closure;
         }
 
-        public HlslTreeNode Comparison { get; }
+        public HLSLTreeNode Comparison { get; }
         public Closure Closure { get; }
     }
 }

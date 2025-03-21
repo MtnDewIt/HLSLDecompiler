@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.Hlsl.FlowControl
+﻿namespace HLSLDecompiler.HLSL.FlowControl
 {
     public interface IStatement
     {

@@ -1,13 +1,13 @@
-﻿namespace HlslDecompiler.Hlsl.TemplateMatch
+﻿namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class NegateNegateTemplate : NodeTemplate<NegateOperation>
     {
-        public override bool Match(HlslTreeNode node)
+        public override bool Match(HLSLTreeNode node)
         {
             return node is NegateOperation negate && negate.Value is NegateOperation;
         }
 
-        public override HlslTreeNode Reduce(NegateOperation node)
+        public override HLSLTreeNode Reduce(NegateOperation node)
         {
             return node.Value;
         }

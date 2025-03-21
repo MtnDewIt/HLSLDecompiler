@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HlslDecompiler", "HlslDecompiler.csproj", "{C1129092-9D43-4F51-BA6E-7EA7F03AA139}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HLSLDecompiler", "HLSLDecompiler.csproj", "{C1129092-9D43-4F51-BA6E-7EA7F03AA139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HlslDecompiler.Tests", "HlslDecompiler.Tests\HlslDecompiler.Tests.csproj", "{B1962B56-4EFD-4025-B831-C6E8FA82C9CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HLSLDecompiler.Tests", "HLSLDecompiler.Tests\HLSLDecompiler.Tests.csproj", "{B1962B56-4EFD-4025-B831-C6E8FA82C9CA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C1129092-9D43-4F51-BA6E-7EA7F03AA139} = {C1129092-9D43-4F51-BA6E-7EA7F03AA139}
 	EndProjectSection

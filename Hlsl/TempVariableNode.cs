@@ -1,8 +1,8 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class TempVariableNode : HlslTreeNode, IHasComponentIndex
+    public class TempVariableNode : HLSLTreeNode, IHasComponentIndex
     {
         public TempVariableNode(RegisterComponentKey registerComponentKey)
         {

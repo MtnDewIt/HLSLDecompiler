@@ -1,9 +1,9 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Operations;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.Operations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     public class MatrixMultiplicationGrouper
     {
@@ -19,13 +19,13 @@ namespace HlslDecompiler.Hlsl
         // float3(dot(m_row1, v), dot(m_row2, v), dot(m_row3, v))
         // float4(dot(m_row1, v), dot(m_row2, v), dot(m_row3, v), dot(m_row4, v))
         // float4(dot(m_row1.xyz, v.xyz), dot(m_row2.xyz, v.xyz), dot(m_row3.xyz, v.xyz), dot(m_row4.xyz, v.xyz)) + m_column4
-        public MatrixMultiplicationContext TryGetMultiplicationGroup(IList<HlslTreeNode> components)
+        public MatrixMultiplicationContext TryGetMultiplicationGroup(IList<HLSLTreeNode> components)
         {
             const bool allowMatrix = true;
 
             if (components.All(c => c is AddOperation))
             {
-                HlslTreeNode[] submatrixNodes = components.Select(g => g.Inputs[0]).ToArray();
+                HLSLTreeNode[] submatrixNodes = components.Select(g => g.Inputs[0]).ToArray();
                 MatrixMultiplicationContext submatrixGroup = TryGetMultiplicationGroup(submatrixNodes);
                 if (submatrixGroup != null)
                 {
@@ -70,17 +70,17 @@ namespace HlslDecompiler.Hlsl
                 return null;
             }
 
-            IList<HlslTreeNode> firstMatrixRow = TryGetMatrixRow(firstDot, firstDot, 0);
+            IList<HLSLTreeNode> firstMatrixRow = TryGetMatrixRow(firstDot, firstDot, 0);
             if (firstMatrixRow == null)
             {
                 return null;
             }
 
-            IList<HlslTreeNode> vector = firstDot.X.Inputs == firstMatrixRow
+            IList<HLSLTreeNode> vector = firstDot.X.Inputs == firstMatrixRow
                     ? firstDot.Y.Inputs
                     : firstDot.X.Inputs;
 
-            var matrixRows = new List<HlslTreeNode[]>
+            var matrixRows = new List<HLSLTreeNode[]>
             {
                 firstMatrixRow.ToArray()
             };
@@ -91,13 +91,13 @@ namespace HlslDecompiler.Hlsl
                     break;
                 }
 
-                IList<HlslTreeNode> matrixRow = TryGetMatrixRow(nextDot, firstDot, i);
+                IList<HLSLTreeNode> matrixRow = TryGetMatrixRow(nextDot, firstDot, i);
                 if (matrixRow == null)
                 {
                     break;
                 }
 
-                IList<HlslTreeNode> nextVector = nextDot.X.Inputs == matrixRow
+                IList<HLSLTreeNode> nextVector = nextDot.X.Inputs == matrixRow
                     ? nextDot.Y.Inputs
                     : nextDot.X.Inputs;
                 if (!NodeGrouper.AreNodesEquivalent(vector, nextVector))
@@ -128,7 +128,7 @@ namespace HlslDecompiler.Hlsl
             return new MatrixMultiplicationContext(vector.ToArray(), matrix, matrixByVector, matrixRows.Count);
         }
 
-        private static IList<HlslTreeNode> SwizzleVector(IList<HlslTreeNode> vector, IList<HlslTreeNode> firstMatrixRow, bool matrixByVector)
+        private static IList<HLSLTreeNode> SwizzleVector(IList<HLSLTreeNode> vector, IList<HLSLTreeNode> firstMatrixRow, bool matrixByVector)
         {
             if (matrixByVector)
             {
@@ -164,7 +164,7 @@ namespace HlslDecompiler.Hlsl
             return vectorSwizzled;
         }
 
-        private ConstantDeclaration TryGetMatrixDeclaration(IList<HlslTreeNode[]> dotProductNodes)
+        private ConstantDeclaration TryGetMatrixDeclaration(IList<HLSLTreeNode[]> dotProductNodes)
         {
             int dimension = dotProductNodes.Count;
             var first = dotProductNodes[0];
@@ -182,7 +182,7 @@ namespace HlslDecompiler.Hlsl
             return null;
         }
 
-        private IList<HlslTreeNode> TryGetMatrixRow(DotProductOperation dot, DotProductOperation firstDot, int row)
+        private IList<HLSLTreeNode> TryGetMatrixRow(DotProductOperation dot, DotProductOperation firstDot, int row)
         {
             if (dot.X.Inputs[0] is RegisterInputNode constantRegister)
             {
@@ -241,7 +241,7 @@ namespace HlslDecompiler.Hlsl
     public class MatrixMultiplicationContext
     {
         public MatrixMultiplicationContext(
-            HlslTreeNode[] vector,
+            HLSLTreeNode[] vector,
             ConstantDeclaration matrix,
             bool matrixByVector,
             int matrixRowCount)
@@ -252,7 +252,7 @@ namespace HlslDecompiler.Hlsl
             MatrixRowCount = matrixRowCount;
         }
 
-        public HlslTreeNode[] Vector { get; }
+        public HLSLTreeNode[] Vector { get; }
 
         public ConstantDeclaration MatrixDeclaration { get; }
         public bool IsMatrixByVector { get; }

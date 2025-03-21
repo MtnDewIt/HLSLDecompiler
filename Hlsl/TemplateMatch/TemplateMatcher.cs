@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class TemplateMatcher
     {
@@ -43,17 +43,17 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             _nodeGrouper = nodeGrouper;
         }
 
-        public HlslTreeNode Reduce(HlslTreeNode node)
+        public HLSLTreeNode Reduce(HLSLTreeNode node)
         {
             return ReduceDepthFirst(node);
         }
 
-        public bool CanGroupComponents(HlslTreeNode a, HlslTreeNode b, bool allowMatrixColumn)
+        public bool CanGroupComponents(HLSLTreeNode a, HLSLTreeNode b, bool allowMatrixColumn)
         {
             return _nodeGrouper.CanGroupComponents(a, b, allowMatrixColumn);
         }
 
-        public bool SharesMatrixColumnOrRow(HlslTreeNode x, HlslTreeNode y)
+        public bool SharesMatrixColumnOrRow(HLSLTreeNode x, HLSLTreeNode y)
         {
             if (x is RegisterInputNode r1 && y is RegisterInputNode r2)
             {
@@ -62,7 +62,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             return false;
         }
 
-        private HlslTreeNode ReduceDepthFirst(HlslTreeNode node)
+        private HLSLTreeNode ReduceDepthFirst(HLSLTreeNode node)
         {
             if (ConstantMatcher.IsConstant(node) || IsRegister(node))
             {
@@ -70,7 +70,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             }
             for (int i = 0; i < node.Inputs.Count; i++)
             {
-                HlslTreeNode input = node.Inputs[i];
+                HLSLTreeNode input = node.Inputs[i];
                 node.Inputs[i] = ReduceDepthFirst(input);
             }
             foreach (INodeTemplate template in _templates)
@@ -95,7 +95,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             return node;
         }
 
-        private static void Replace(HlslTreeNode node, HlslTreeNode with)
+        private static void Replace(HLSLTreeNode node, HLSLTreeNode with)
         {
             if (node == with)
             {
@@ -118,7 +118,7 @@ namespace HlslDecompiler.Hlsl.TemplateMatch
             }
         }
 
-        private static bool IsRegister(HlslTreeNode node)
+        private static bool IsRegister(HLSLTreeNode node)
         {
             return node is RegisterInputNode;
         }

@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     // D3DSIO_X
     // https://msdn.microsoft.com/en-us/library/windows/hardware/ff569706

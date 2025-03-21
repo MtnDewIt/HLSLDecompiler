@@ -1,17 +1,17 @@
-﻿using HlslDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.DirectXShaderModel;
 using System;
 
-namespace HlslDecompiler.Hlsl.TemplateMatch
+namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class CompareNegativeWithZeroTemplate : NodeTemplate<ComparisonNode>
     {
-        public override bool Match(HlslTreeNode node)
+        public override bool Match(HLSLTreeNode node)
         {
             return node is ComparisonNode comp &&
                 comp.Left is NegateOperation && ConstantMatcher.IsZero(comp.Right);
         }
 
-        public override HlslTreeNode Reduce(ComparisonNode node)
+        public override HLSLTreeNode Reduce(ComparisonNode node)
         {
             var comparison = node.Comparison switch
             {

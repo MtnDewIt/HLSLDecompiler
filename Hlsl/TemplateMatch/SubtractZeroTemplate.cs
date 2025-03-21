@@ -1,15 +1,15 @@
-﻿namespace HlslDecompiler.Hlsl.TemplateMatch
+﻿namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class SubtractZeroTemplate : NodeTemplate<SubtractOperation>
     {
-        public override bool Match(HlslTreeNode node)
+        public override bool Match(HLSLTreeNode node)
         {
             return node is SubtractOperation subtract &&
                 ((ConstantMatcher.IsZero(subtract.Minuend) && !ConstantMatcher.IsZero(subtract.Subtrahend))
                 || (!ConstantMatcher.IsZero(subtract.Minuend) && ConstantMatcher.IsZero(subtract.Subtrahend)));
         }
 
-        public override HlslTreeNode Reduce(SubtractOperation node)
+        public override HLSLTreeNode Reduce(SubtractOperation node)
         {
             if (ConstantMatcher.IsZero(node.Minuend))
             {

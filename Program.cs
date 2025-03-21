@@ -1,16 +1,28 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Hlsl;
-using HlslDecompiler.Util;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.HLSL;
+using HLSLDecompiler.Util;
 using System;
 using System.IO;
+using System.Reflection;
 
-namespace HlslDecompiler
+namespace HLSLDecompiler
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var options = CommandLineOptions.Parse(args);
+            Console.WriteLine($"HLSLDecompiler [{Assembly.GetExecutingAssembly().GetName().Version} (Built {GetLinkerTimestampUtc(Assembly.GetExecutingAssembly())} UTC)]");
+            Console.WriteLine();
+            Console.WriteLine("Please report any bugs and/or feature requests:");
+            Console.WriteLine("https://github.com/MtnDewIt/HLSLDecompiler/issues");
+
+            Console.WriteLine("\nEnter the path to a compiled DX shader file (.fxc/.fxo):");
+            Console.Write("> ");
+
+            var input = Console.ReadLine();
+
+            var options = CommandLineOptions.Parse(input);
+            
             if (options.InputFilename == null)
             {
                 Console.WriteLine("Expected input filename");
@@ -50,7 +62,7 @@ namespace HlslDecompiler
                 Console.WriteLine("Writing {0}", asmFilename);
                 writer.Write(asmFilename);
 
-                var hlslWriter = CreateHlslWriter(shader, doAstAnalysis);
+                var hlslWriter = CreateHLSLWriter(shader, doAstAnalysis);
                 string hlslFilename = $"{baseFilename}.fx";
                 Console.WriteLine("Writing {0}", hlslFilename);
                 hlslWriter.Write(hlslFilename);
@@ -88,19 +100,42 @@ namespace HlslDecompiler
                     var writer = new AsmWriter(shader);
                     writer.Write(outFilename + ".asm");
 
-                    var hlslWriter = CreateHlslWriter(shader, doAstAnalysis);
+                    var hlslWriter = CreateHLSLWriter(shader, doAstAnalysis);
                     hlslWriter.Write(outFilename + ".fx");
                 }
             }
         }
 
-        private static HlslWriter CreateHlslWriter(ShaderModel shader, bool doAstAnalysis)
+        private static HLSLWriter CreateHLSLWriter(ShaderModel shader, bool doAstAnalysis)
         {
             if (doAstAnalysis)
             {
-                return new HlslAstWriter(shader);
+                return new HLSLAstWriter(shader);
             }
-            return new HlslSimpleWriter(shader);
+            return new HLSLSimpleWriter(shader);
+        }
+
+        public static DateTime GetLinkerTimestampUtc(Assembly assembly)
+        {
+            var location = assembly.Location;
+            return GetLinkerTimestampUtc(location);
+        }
+
+        public static DateTime GetLinkerTimestampUtc(string filePath)
+        {
+            const int peHeaderOffset = 60;
+            const int linkerTimestampOffset = 8;
+            var bytes = new byte[2048];
+
+            using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                file.Read(bytes, 0, bytes.Length);
+            }
+
+            var headerPos = BitConverter.ToInt32(bytes, peHeaderOffset);
+            var secondsSince1970 = BitConverter.ToInt32(bytes, headerPos + linkerTimestampOffset);
+            var dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return dt.AddSeconds(secondsSince1970);
         }
     }
 }

@@ -1,18 +1,18 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Hlsl.FlowControl;
-using HlslDecompiler.Hlsl.TemplateMatch;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.HLSL.FlowControl;
+using HLSLDecompiler.HLSL.TemplateMatch;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class HlslAstWriter : HlslWriter
+    public class HLSLAstWriter : HLSLWriter
     {
         private NodeCompiler _compiler;
         private NodeGrouper _grouper;
         private TemplateMatcher _templateMatcher;
 
-        public HlslAstWriter(ShaderModel shader)
+        public HLSLAstWriter(ShaderModel shader)
             : base(shader)
         {
         }
@@ -29,7 +29,7 @@ namespace HlslDecompiler.Hlsl
             WriteAst(_ast);
         }
 
-        private void WriteAst(HlslAst ast)
+        private void WriteAst(HLSLAst ast)
         {
             _compiler = new NodeCompiler(_registers);
             _grouper = new NodeGrouper(_registers);
@@ -137,7 +137,7 @@ namespace HlslDecompiler.Hlsl
 
         private void WriteReturnStatement(ReturnStatement returnStatement)
         {
-            Dictionary<RegisterKey, HlslTreeNode> outputs =
+            Dictionary<RegisterKey, HLSLTreeNode> outputs =
                 GroupComponents(returnStatement.Closure.Outputs.Where(o => o.Key.RegisterKey.IsOutput))
                     .ToDictionary(r => r.Key, r => Reduce(r.Value));
 
@@ -174,7 +174,7 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private HlslTreeNode Reduce(HlslTreeNode node)
+        private HLSLTreeNode Reduce(HLSLTreeNode node)
         {
             return _templateMatcher.Reduce(node);
         }
@@ -191,14 +191,14 @@ namespace HlslDecompiler.Hlsl
                     o => o.ToArray());
         }
 
-        private static Dictionary<RegisterKey, HlslTreeNode> GroupComponents(IEnumerable<KeyValuePair<RegisterComponentKey, HlslTreeNode>> outputsByComponent)
+        private static Dictionary<RegisterKey, HLSLTreeNode> GroupComponents(IEnumerable<KeyValuePair<RegisterComponentKey, HLSLTreeNode>> outputsByComponent)
         {
             return outputsByComponent
                 .OrderBy(o => o.Key.ComponentIndex)
                 .GroupBy(o => o.Key.RegisterKey)
                 .ToDictionary(
                     o => o.Key,
-                    o => (HlslTreeNode)new GroupNode(o.Select(o => o.Value).ToArray()));
+                    o => (HLSLTreeNode)new GroupNode(o.Select(o => o.Value).ToArray()));
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿using HlslDecompiler.Hlsl.FlowControl;
+﻿using HLSLDecompiler.HLSL.FlowControl;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class HlslAst
+    public class HLSLAst
     {
         public IStatement Statement { get; private set; }
         public RegisterState RegisterState { get; private set; }
 
-        public HlslAst(IStatement statement, RegisterState registerState)
+        public HLSLAst(IStatement statement, RegisterState registerState)
         {
             Statement = statement;
             RegisterState = registerState;

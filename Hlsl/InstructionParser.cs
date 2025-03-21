@@ -1,29 +1,29 @@
-﻿using HlslDecompiler.DirectXShaderModel;
-using HlslDecompiler.Hlsl.FlowControl;
-using HlslDecompiler.Util;
+﻿using HLSLDecompiler.DirectXShaderModel;
+using HLSLDecompiler.HLSL.FlowControl;
+using HLSLDecompiler.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
     class InstructionParser
     {
-        private Dictionary<RegisterComponentKey, HlslTreeNode> _activeOutputs;
+        private Dictionary<RegisterComponentKey, HLSLTreeNode> _activeOutputs;
         private RegisterState _registerState;
         private Stack<IStatement> _currentStatements;
 
-        public static HlslAst Parse(ShaderModel shader)
+        public static HLSLAst Parse(ShaderModel shader)
         {
             var parser = new InstructionParser();
             return parser.ParseToAst(shader);
         }
 
-        private HlslAst ParseToAst(ShaderModel shader)
+        private HLSLAst ParseToAst(ShaderModel shader)
         {
-            _activeOutputs = new Dictionary<RegisterComponentKey, HlslTreeNode>();
+            _activeOutputs = new Dictionary<RegisterComponentKey, HLSLTreeNode>();
             _registerState = new RegisterState(shader);
             _currentStatements = new Stack<IStatement>();
 
@@ -48,7 +48,7 @@ namespace HlslDecompiler.Hlsl
                 instructionPointer++;
             }
 
-            return new HlslAst(_currentStatements.Pop(), _registerState);
+            return new HLSLAst(_currentStatements.Pop(), _registerState);
         }
 
         private void ParseInstruction(D3D9Instruction instruction)
@@ -299,12 +299,12 @@ namespace HlslDecompiler.Hlsl
         {
             _registerState.DeclareDestinationRegister(instruction);
 
-            var newOutputs = new Dictionary<RegisterComponentKey, HlslTreeNode>();
+            var newOutputs = new Dictionary<RegisterComponentKey, HLSLTreeNode>();
 
             RegisterComponentKey[] destinationKeys = GetDestinationKeys(instruction).ToArray();
             foreach (RegisterComponentKey destinationKey in destinationKeys)
             {
-                HlslTreeNode instructionTree = CreateInstructionTree(instruction, destinationKey);
+                HLSLTreeNode instructionTree = CreateInstructionTree(instruction, destinationKey);
                 newOutputs[destinationKey] = instructionTree;
             }
 
@@ -319,7 +319,7 @@ namespace HlslDecompiler.Hlsl
             Closure closure = GetCurrentClosure();
             SetTempVariablesActive(closure);
 
-            HlslTreeNode value;
+            HLSLTreeNode value;
             if (instruction is D3D10Instruction)
             {
                 value = new GroupNode(GetParameterRegisterKeys(instruction, 0, 15)
@@ -357,7 +357,7 @@ namespace HlslDecompiler.Hlsl
             Closure closure = GetCurrentClosure();
             SetTempVariablesActive(closure);
 
-            HlslTreeNode comparison = new GroupNode(Enumerable.Range(0, 4)
+            HLSLTreeNode comparison = new GroupNode(Enumerable.Range(0, 4)
                 .Select(i => GetInputs(instruction, i))
                 .Select(inputs => new ComparisonNode(inputs[0], inputs[1], instruction.Comparison))
                 .ToArray());
@@ -384,7 +384,7 @@ namespace HlslDecompiler.Hlsl
             Closure closure = GetCurrentClosure();
             SetTempVariablesActive(closure);
 
-            HlslTreeNode comparison = new GroupNode(Enumerable.Range(0, 4)
+            HLSLTreeNode comparison = new GroupNode(Enumerable.Range(0, 4)
                 .Select(i => GetInputs(instruction, i))
                 .Select(inputs => new ComparisonNode(inputs[0], inputs[1], instruction.Comparison))
                 .ToArray());
@@ -476,9 +476,9 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private void SetActiveOutput(RegisterComponentKey outputRegisterComponent, HlslTreeNode value)
+        private void SetActiveOutput(RegisterComponentKey outputRegisterComponent, HLSLTreeNode value)
         {
-            if (_activeOutputs.TryGetValue(outputRegisterComponent, out HlslTreeNode existing) && existing is TempVariableNode tempVariable)
+            if (_activeOutputs.TryGetValue(outputRegisterComponent, out HLSLTreeNode existing) && existing is TempVariableNode tempVariable)
             {
                 value = new TempAssignmentNode(tempVariable, value)
                 {
@@ -492,12 +492,12 @@ namespace HlslDecompiler.Hlsl
         {
             _registerState.DeclareDestinationRegister(instruction);
 
-            var newOutputs = new Dictionary<RegisterComponentKey, HlslTreeNode>();
+            var newOutputs = new Dictionary<RegisterComponentKey, HLSLTreeNode>();
 
             RegisterComponentKey[] destinationKeys = GetDestinationKeys(instruction).ToArray();
             foreach (RegisterComponentKey destinationKey in destinationKeys)
             {
-                HlslTreeNode instructionTree = CreateInstructionTree(instruction, destinationKey);
+                HLSLTreeNode instructionTree = CreateInstructionTree(instruction, destinationKey);
                 newOutputs[destinationKey] = instructionTree;
             }
 
@@ -539,7 +539,7 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private HlslTreeNode CreateInstructionTree(D3D9Instruction instruction, RegisterComponentKey destinationKey)
+        private HLSLTreeNode CreateInstructionTree(D3D9Instruction instruction, RegisterComponentKey destinationKey)
         {
             int componentIndex = destinationKey.ComponentIndex;
 
@@ -587,7 +587,7 @@ namespace HlslDecompiler.Hlsl
                 case Opcode.Slt:
                 case Opcode.TexKill:
                     {
-                        HlslTreeNode[] inputs = GetInputs(instruction, componentIndex);
+                        HLSLTreeNode[] inputs = GetInputs(instruction, componentIndex);
                         switch (instruction.Opcode)
                         {
                             case Opcode.Abs:
@@ -656,7 +656,7 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private HlslTreeNode CreateInstructionTree(D3D10Instruction instruction, RegisterComponentKey destinationKey)
+        private HLSLTreeNode CreateInstructionTree(D3D10Instruction instruction, RegisterComponentKey destinationKey)
         {
             int componentIndex = destinationKey.ComponentIndex;
 
@@ -688,7 +688,7 @@ namespace HlslDecompiler.Hlsl
                 case D3D10Opcode.SinCos:
                 case D3D10Opcode.Sqrt:
                     {
-                        HlslTreeNode[] inputs = GetInputs(instruction, componentIndex);
+                        HLSLTreeNode[] inputs = GetInputs(instruction, componentIndex);
                         switch (instruction.Opcode)
                         {
                             case D3D10Opcode.Add:
@@ -768,7 +768,7 @@ namespace HlslDecompiler.Hlsl
             var samplerConstant = _registerState.FindConstant(RegisterSet.Sampler, sampler.RegisterComponentKey.RegisterKey.Number);
             int numSamplerOutputComponents = (isBias || isLod ||  isProj) ? 4 : samplerConstant.GetSamplerDimension();
 
-            HlslTreeNode[] texCoords = GetInputComponents(instruction, TextureCoordsParamIndex, numSamplerOutputComponents);
+            HLSLTreeNode[] texCoords = GetInputComponents(instruction, TextureCoordsParamIndex, numSamplerOutputComponents);
 
             if (isBias)
             {
@@ -776,8 +776,8 @@ namespace HlslDecompiler.Hlsl
             }
             if (isGrad)
             {
-                HlslTreeNode[] ddx = GetInputComponents(instruction, 3, numSamplerOutputComponents);
-                HlslTreeNode[] ddy = GetInputComponents(instruction, 4, numSamplerOutputComponents);
+                HLSLTreeNode[] ddx = GetInputComponents(instruction, 3, numSamplerOutputComponents);
+                HLSLTreeNode[] ddy = GetInputComponents(instruction, 4, numSamplerOutputComponents);
                 return TextureLoadOutputNode.CreateGrad(sampler, texCoords, outputComponent, ddx, ddy);
             }
             if (isLod)
@@ -791,7 +791,7 @@ namespace HlslDecompiler.Hlsl
             return TextureLoadOutputNode.Create(sampler, texCoords, outputComponent);
         }
 
-        private HlslTreeNode CreateDotProduct2AddNode(Instruction instruction)
+        private HLSLTreeNode CreateDotProduct2AddNode(Instruction instruction)
         {
             var vector1 = GetInputComponents(instruction, 1, 2);
             var vector2 = GetInputComponents(instruction, 2, 2);
@@ -804,13 +804,13 @@ namespace HlslDecompiler.Hlsl
             return new AddOperation(dp2, add);
         }
 
-        private HlslTreeNode CreateDotProductNode(D3D9Instruction instruction)
+        private HLSLTreeNode CreateDotProductNode(D3D9Instruction instruction)
         {
-            var addends = new List<HlslTreeNode>();
+            var addends = new List<HLSLTreeNode>();
             int numComponents = instruction.Opcode == Opcode.Dp3 ? 3 : 4;
             for (int component = 0; component < numComponents; component++)
             {
-                IList<HlslTreeNode> componentInput = GetInputs(instruction, component);
+                IList<HLSLTreeNode> componentInput = GetInputs(instruction, component);
                 var multiply = new MultiplyOperation(componentInput[0], componentInput[1]);
                 addends.Add(multiply);
             }
@@ -818,9 +818,9 @@ namespace HlslDecompiler.Hlsl
             return addends.Aggregate((addition, addend) => new AddOperation(addition, addend));
         }
 
-        private HlslTreeNode CreateDotProductNode(D3D10Instruction instruction)
+        private HLSLTreeNode CreateDotProductNode(D3D10Instruction instruction)
         {
-            var addends = new List<HlslTreeNode>();
+            var addends = new List<HLSLTreeNode>();
             int numComponents;
             switch (instruction.Opcode)
             {
@@ -838,7 +838,7 @@ namespace HlslDecompiler.Hlsl
             }
             for (int component = 0; component < numComponents; component++)
             {
-                IList<HlslTreeNode> componentInput = GetInputs(instruction, component);
+                IList<HLSLTreeNode> componentInput = GetInputs(instruction, component);
                 var multiply = new MultiplyOperation(componentInput[0], componentInput[1]);
                 addends.Add(multiply);
             }
@@ -846,22 +846,22 @@ namespace HlslDecompiler.Hlsl
             return addends.Aggregate((addition, addend) => new AddOperation(addition, addend));
         }
 
-        private HlslTreeNode CreateNormalizeOutputNode(D3D9Instruction instruction, int outputComponent)
+        private HLSLTreeNode CreateNormalizeOutputNode(D3D9Instruction instruction, int outputComponent)
         {
-            var inputs = new List<HlslTreeNode>();
+            var inputs = new List<HLSLTreeNode>();
             for (int component = 0; component < 3; component++)
             {
-                IList<HlslTreeNode> componentInput = GetInputs(instruction, component);
+                IList<HLSLTreeNode> componentInput = GetInputs(instruction, component);
                 inputs.AddRange(componentInput);
             }
 
             return new NormalizeOutputNode(inputs, outputComponent);
         }
 
-        private HlslTreeNode[] GetInputs(D3D9Instruction instruction, int componentIndex)
+        private HLSLTreeNode[] GetInputs(D3D9Instruction instruction, int componentIndex)
         {
             int numInputs = GetNumInputs(instruction.Opcode);
-            var inputs = new HlslTreeNode[numInputs];
+            var inputs = new HLSLTreeNode[numInputs];
             int parameterIndex = instruction.Opcode.HasDestination() ? 1 : 0;
             for (int i = 0; i < numInputs; i++)
             {
@@ -873,10 +873,10 @@ namespace HlslDecompiler.Hlsl
             return inputs;
         }
 
-        private HlslTreeNode[] GetInputs(D3D10Instruction instruction, int componentIndex)
+        private HLSLTreeNode[] GetInputs(D3D10Instruction instruction, int componentIndex)
         {
             int numInputs = GetNumInputs(instruction.Opcode);
-            var inputs = new HlslTreeNode[numInputs];
+            var inputs = new HLSLTreeNode[numInputs];
             for (int i = 0; i < numInputs; i++)
             {
                 int inputParameterIndex = i + 1;
@@ -888,7 +888,7 @@ namespace HlslDecompiler.Hlsl
                 else
                 {
                     var inputKey = GetParamRegisterComponentKey(instruction, inputParameterIndex, componentIndex);
-                    HlslTreeNode input = _activeOutputs[inputKey];
+                    HLSLTreeNode input = _activeOutputs[inputKey];
                     D3D10OperandModifier modifier = instruction.GetOperandModifier(inputParameterIndex);
                     input = ApplyModifier(input, modifier);
                     inputs[i] = input;
@@ -897,13 +897,13 @@ namespace HlslDecompiler.Hlsl
             return inputs;
         }
 
-        private HlslTreeNode[] GetInputComponents(Instruction instruction, int inputParameterIndex, int numComponents)
+        private HLSLTreeNode[] GetInputComponents(Instruction instruction, int inputParameterIndex, int numComponents)
         {
-            var components = new HlslTreeNode[numComponents];
+            var components = new HLSLTreeNode[numComponents];
             for (int i = 0; i < numComponents; i++)
             {
                 RegisterComponentKey inputKey = GetParamRegisterComponentKey(instruction, inputParameterIndex, i);
-                HlslTreeNode input = _activeOutputs[inputKey];
+                HLSLTreeNode input = _activeOutputs[inputKey];
                 if (instruction is D3D9Instruction d9Instruction)
                 {
                     var modifier = d9Instruction.GetSourceModifier(inputParameterIndex);
@@ -914,7 +914,7 @@ namespace HlslDecompiler.Hlsl
             return components;
         }
 
-        private static HlslTreeNode ApplyModifier(HlslTreeNode input, SourceModifier modifier)
+        private static HLSLTreeNode ApplyModifier(HLSLTreeNode input, SourceModifier modifier)
         {
             switch (modifier)
             {
@@ -931,9 +931,9 @@ namespace HlslDecompiler.Hlsl
             }
         }
 
-        private static HlslTreeNode ApplyModifier(HlslTreeNode input, D3D10OperandModifier modifier)
+        private static HLSLTreeNode ApplyModifier(HLSLTreeNode input, D3D10OperandModifier modifier)
         {
-            HlslTreeNode node = input;
+            HLSLTreeNode node = input;
             if (modifier.HasFlag(D3D10OperandModifier.Abs))
             {
                 node = new AbsoluteOperation(node);

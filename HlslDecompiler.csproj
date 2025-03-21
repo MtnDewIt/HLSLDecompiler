@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="HlslDecompiler.Tests\**" />
-    <EmbeddedResource Remove="HlslDecompiler.Tests\**" />
-    <None Remove="HlslDecompiler.Tests\**" />
+    <Compile Remove="HLSLDecompiler.Tests\**" />
+    <EmbeddedResource Remove="HLSLDecompiler.Tests\**" />
+    <None Remove="HLSLDecompiler.Tests\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public class ConstantNode : HlslTreeNode
+    public class ConstantNode : HLSLTreeNode
     {
         public float Value { get; }
 

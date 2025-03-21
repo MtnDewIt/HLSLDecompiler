@@ -1,15 +1,15 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class MultiplyOperation : Operation
     {
-        public MultiplyOperation(HlslTreeNode factor1, HlslTreeNode factor2)
+        public MultiplyOperation(HLSLTreeNode factor1, HLSLTreeNode factor2)
         {
             AddInput(factor1);
             AddInput(factor2);
         }
 
-        public HlslTreeNode Factor1 => Inputs[0];
-        public HlslTreeNode Factor2 => Inputs[1];
+        public HLSLTreeNode Factor1 => Inputs[0];
+        public HLSLTreeNode Factor2 => Inputs[1];
 
         public override string Mnemonic => "mul";
     }

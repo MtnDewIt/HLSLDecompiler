@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     // https://docs.microsoft.com/en-us/windows/win32/direct3d9/d3ddeclusage
     public enum DeclUsage

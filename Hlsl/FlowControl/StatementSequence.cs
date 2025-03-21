@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HlslDecompiler.Hlsl.FlowControl
+namespace HLSLDecompiler.HLSL.FlowControl
 {
     public class StatementSequence : IStatement
     {

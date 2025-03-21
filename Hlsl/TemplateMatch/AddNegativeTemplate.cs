@@ -1,15 +1,15 @@
-﻿namespace HlslDecompiler.Hlsl.TemplateMatch
+﻿namespace HLSLDecompiler.HLSL.TemplateMatch
 {
     public class AddNegativeTemplate : NodeTemplate<AddOperation>
     {
-        public override bool Match(HlslTreeNode node)
+        public override bool Match(HLSLTreeNode node)
         {
             return node is AddOperation add &&
                 ((ConstantMatcher.IsNegative(add.Addend1) && !ConstantMatcher.IsNegative(add.Addend2)) ||
                 (!ConstantMatcher.IsNegative(add.Addend1) && ConstantMatcher.IsNegative(add.Addend2)));
         }
 
-        public override HlslTreeNode Reduce(AddOperation node)
+        public override HLSLTreeNode Reduce(AddOperation node)
         {
             if (ConstantMatcher.IsNegative(node.Addend1))
             {

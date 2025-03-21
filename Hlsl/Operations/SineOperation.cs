@@ -1,8 +1,8 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class SineOperation : ConsumerOperation
     {
-        public SineOperation(HlslTreeNode value)
+        public SineOperation(HLSLTreeNode value)
         {
             AddInput(value);
         }

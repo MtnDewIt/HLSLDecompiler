@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace HlslDecompiler.Hlsl
+namespace HLSLDecompiler.HLSL
 {
-    public abstract class Operation : HlslTreeNode
+    public abstract class Operation : HLSLTreeNode
     {
         public abstract string Mnemonic { get; }
 

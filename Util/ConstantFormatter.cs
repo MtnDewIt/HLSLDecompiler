@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace HlslDecompiler.Util
+namespace HLSLDecompiler.Util
 {
     public class ConstantFormatter
     {

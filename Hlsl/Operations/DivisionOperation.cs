@@ -1,15 +1,15 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class DivisionOperation : Operation
     {
-        public DivisionOperation(HlslTreeNode dividend, HlslTreeNode divisor)
+        public DivisionOperation(HLSLTreeNode dividend, HLSLTreeNode divisor)
         {
             AddInput(dividend);
             AddInput(divisor);
         }
 
-        public HlslTreeNode Dividend => Inputs[0];
-        public HlslTreeNode Divisor => Inputs[1];
+        public HLSLTreeNode Dividend => Inputs[0];
+        public HLSLTreeNode Divisor => Inputs[1];
 
         public override string Mnemonic => "div";
     }

@@ -1,10 +1,10 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
-    public class GroupNode : HlslTreeNode
+    public class GroupNode : HLSLTreeNode
     {
-        public GroupNode(params HlslTreeNode[] components)
+        public GroupNode(params HLSLTreeNode[] components)
         {
-            foreach (HlslTreeNode component in components)
+            foreach (HLSLTreeNode component in components)
             {
                 AddInput(component);
             }
@@ -12,7 +12,7 @@
 
         public int Length => Inputs.Count;
 
-        public HlslTreeNode this[int index]
+        public HLSLTreeNode this[int index]
         {
             get => Inputs[index];
             set => Inputs[index] = value;

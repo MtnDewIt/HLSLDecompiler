@@ -1,17 +1,17 @@
-﻿namespace HlslDecompiler.Hlsl
+﻿namespace HLSLDecompiler.HLSL
 {
     public class MultiplyAddOperation : Operation
     {
-        public MultiplyAddOperation(HlslTreeNode factor1, HlslTreeNode factor2, HlslTreeNode addend)
+        public MultiplyAddOperation(HLSLTreeNode factor1, HLSLTreeNode factor2, HLSLTreeNode addend)
         {
             AddInput(factor1);
             AddInput(factor2);
             AddInput(addend);
         }
 
-        public HlslTreeNode Factor1 => Inputs[0];
-        public HlslTreeNode Factor2 => Inputs[1];
-        public HlslTreeNode Addend => Inputs[2];
+        public HLSLTreeNode Factor1 => Inputs[0];
+        public HLSLTreeNode Factor2 => Inputs[1];
+        public HLSLTreeNode Addend => Inputs[2];
 
         public override string Mnemonic => "madd";
     }

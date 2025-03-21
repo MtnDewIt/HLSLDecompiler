@@ -1,4 +1,4 @@
-﻿namespace HlslDecompiler.DirectXShaderModel
+﻿namespace HLSLDecompiler.DirectXShaderModel
 {
     // https://docs.microsoft.com/en-us/windows-hardware/drivers/display/destination-parameter-token
     public enum ResultModifier
