@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace HLSLDecompiler.Util
@@ -9,6 +8,9 @@ namespace HLSLDecompiler.Util
     {
         public string InputFilename { get; }
         public bool DoAstAnalysis { get; }
+        public bool Compile { get; }
+        public string Version { get; }
+        public string EntryPoint { get; }
 
         public static CommandLineOptions Parse(string args)
         {
@@ -61,24 +63,44 @@ namespace HLSLDecompiler.Util
                 results.Add(arg);
             }
 
-            foreach (string arg in results)
+            // TODO: Redo Input Parsing
+
+            var argument = results[0];
+
+            if (argument.StartsWith("--"))
             {
-                if (arg.StartsWith("--"))
+                string option = argument.Substring(2);
+                if (option == "ast")
                 {
-                    string option = arg.Substring(2);
-                    if (option == "ast")
+                    DoAstAnalysis = true;
+
+                    InputFilename = results[1];
+                }
+                else if (option == "compile")
+                {
+                    Compile = true;
+
+                    InputFilename = results[1];
+
+                    EntryPoint = results[2];
+
+                    if (results[3] == "ps_3_0" || results[3] == "vs_3_0")
                     {
-                        DoAstAnalysis = true;
+                        Version = results[3];
                     }
                     else
                     {
-                        Console.WriteLine("Unknown option: --" + option);
+                        Console.WriteLine("Unknown Version: " + results[3]);
                     }
                 }
                 else
                 {
-                    InputFilename = arg;
+                    Console.WriteLine("Unknown option: --" + option);
                 }
+            }
+            else
+            {
+                InputFilename = results[0];
             }
         }
     }

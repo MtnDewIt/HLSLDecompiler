@@ -1,15 +1,17 @@
-﻿using HLSLDecompiler.DirectXShaderModel;
+﻿using HLSLDecompiler.D3D;
+using HLSLDecompiler.DirectXShaderModel;
 using HLSLDecompiler.HLSL;
 using HLSLDecompiler.Util;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
 namespace HLSLDecompiler
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine($"HLSLDecompiler [{Assembly.GetExecutingAssembly().GetName().Version} (Built {GetLinkerTimestampUtc(Assembly.GetExecutingAssembly())} UTC)]");
             Console.WriteLine();
@@ -31,20 +33,30 @@ namespace HLSLDecompiler
 
             string baseFilename = Path.GetFileNameWithoutExtension(options.InputFilename);
 
-            using (var inputStream = File.Open(options.InputFilename, FileMode.Open, FileAccess.Read))
+            if (options.Compile)
             {
-                var format = FormatDetector.Detect(inputStream);
-                switch (format)
+                var macros = new List<D3D.D3D.SHADER_MACRO>();
+                var bytecode = D3DCompiler.GenerateByteCode(options.InputFilename, macros, options.EntryPoint, options.Version);
+
+                File.WriteAllBytes($"{baseFilename}.fxc", bytecode);
+            }
+            else 
+            {
+                using (var inputStream = File.Open(options.InputFilename, FileMode.Open, FileAccess.Read))
                 {
-                    case ShaderFileFormat.ShaderModel3:
-                        ReadShaderModel(baseFilename, inputStream, options.DoAstAnalysis);
-                        break;
-                    case ShaderFileFormat.Rgxa:
-                        ReadRgxa(baseFilename, inputStream, options.DoAstAnalysis);
-                        break;
-                    case ShaderFileFormat.Unknown:
-                        Console.WriteLine("Unknown file format!");
-                        break;
+                    var format = FormatDetector.Detect(inputStream);
+                    switch (format)
+                    {
+                        case ShaderFileFormat.ShaderModel3:
+                            ReadShaderModel(baseFilename, inputStream, options.DoAstAnalysis);
+                            break;
+                        case ShaderFileFormat.Rgxa:
+                            ReadRgxa(baseFilename, inputStream, options.DoAstAnalysis);
+                            break;
+                        case ShaderFileFormat.Unknown:
+                            Console.WriteLine("Unknown file format!");
+                            break;
+                    }
                 }
             }
 
