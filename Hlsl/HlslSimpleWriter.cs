@@ -476,8 +476,15 @@ namespace HLSLDecompiler
             switch (registerType)
             {
                 case RegisterType.ConstBool:
-                    throw new NotImplementedException();
-                    return null;
+                    {
+                        var constantBool = _registers.ConstantDeclarations.FirstOrDefault(x => x.RegisterIndex == registerNumber);
+                        if (constantBool == null)
+                        {
+                            return null;
+                        }
+
+                        return $"{constantBool.Name}";
+                    }
                 case RegisterType.ConstInt:
                     {
                         var constantInt = _registers.ConstantIntDefinitions.FirstOrDefault(x => x.RegisterIndex == registerNumber);
